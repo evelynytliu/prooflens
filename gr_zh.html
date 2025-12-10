@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProofLens - 在印刷前揪出所有錯誤</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .strobe-animation {
+            animation: pulse-opacity 2s infinite;
+        }
+
+        @keyframes pulse-opacity {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+    </style>
+    <!-- Redirect Script for consistency -->
+    <script>
+        // Check if user explicitly wants English
+        if (localStorage.getItem('pref_lang') === 'en') {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+
+<body class="bg-white text-gray-900 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain">
+                    <span class="font-bold text-xl text-gray-900">ProofLens</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium transition">功能特色</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium transition">使用教學</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium transition">價格</a>
+
+                    <!-- Language Toggle -->
+                    <button onclick="localStorage.setItem('pref_lang', 'en'); window.location.href = 'index.html'"
+                        class="text-gray-500 hover:text-gray-900 font-bold transition flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                            </path>
+                        </svg>
+                        EN
+                    </button>
+
+                    <a href="#pricing"
+                        class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">立即開始</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-gray-900 overflow-hidden">
+        <!-- Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                讓錯誤止步於 <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">印刷之前。</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 mb-10">
+                專為包裝與說明書設計的自動比對工具。幾秒鐘內揪出「隱藏版」修改與廠商的檔案位移。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                <a href="#pricing"
+                    class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full text-white bg-blue-600 hover:bg-blue-500 transition-all transform hover:scale-105 shadow-xl shadow-blue-600/30">
+                    下載 Windows 版 ($15 USD)
+                </a>
+                <a href="#how-it-works"
+                    class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-full text-gray-300 bg-white/10 hover:bg-white/20 backdrop-blur-sm transition border border-white/10">
+                    看看如何運作
+                </a>
+            </div>
+
+            <!-- Hero Image/GIF Placeholder -->
+            <div class="relative max-w-5xl mx-auto mt-16 group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200">
+                </div>
+
+                <div class="relative rounded-2xl shadow-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <img src="hero_box.gif" alt="ProofLens 自動頻閃示範"
+                        class="w-full h-auto object-cover transform transition duration-700 hover:scale-[1.01]">
+
+                    <div class="absolute bottom-4 left-4 right-4 text-center">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-white/90 text-sm font-medium border border-white/10">
+                            Auto-Strobe 自動頻閃模式 (0.5s)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Points Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">為什麼光靠肉眼校對這麼危險？</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">人工校對不僅耗神、緩慢，更容易因為「視覺疲勞」而漏掉關鍵錯誤。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-2xl mb-6">👻</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">客戶的「幽靈修改」</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        客戶傳來 "Final_v2" 卻沒說他們偷偷刪了一個警語圖示？如果您沒發現，重印費就是您買單。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl mb-6">🖨️
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">廠商轉檔位移</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        您給的 PDF 是完美的，但印刷廠軟體跑了一下，版面文字偏移 1mm。肉眼乍看沒問題，但 ProofLens 能幫您抓出那些「抖動」的文字。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-6">😵
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">版本大亂鬥</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        "Pack_v3_Final.pdf" 和 "Pack_v3_Print.pdf" 到底是不是同一個檔案？別用猜的，5 秒鐘比對一下就安心了。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Deep Dive Section (Zig-Zag Layout) -->
+    <section id="features" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl transform rotate-2 opacity-10 blur-lg">
+                        </div>
+                        <img src="f3_app_ov.gif" alt="文字跑版偵測"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm font-bold mb-4">
+                            印刷廠 QA 利器
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            抓出文字重排與位移。
+                        </h3>
+
+                        <p class="text-lg text-gray-600 mb-6">
+                            廠商軟體讓您的版面位移了 1mm？轉檔時某個圖層消失了？傳統的「左右對照」很難發現這些細微災難。
+                        </p>
+
+                        <p class="text-lg text-gray-600 mb-6">
+                            此外，如果廠商回傳檔包含了<strong>裁切標記或色條</strong>，ProofLens 會自動忽略它們。我們的 <strong>Smart
+                                Auto-Align</strong> 引擎能瞬間將內容對齊，讓您不用手動裁切就能直接比對設計本身。
+                        </p>
+
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>自動對齊 (Auto-Align)：</strong> 忽略出血與裁切標記，精準對齊內容。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>自動頻閃 (Auto-Strobe)：</strong> 看著位移的文字在螢幕上「跳動」，錯誤無所遁形。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="lg:col-start-2 relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-l from-yellow-500 to-amber-500 rounded-3xl transform -rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f2_app_sbs.gif" alt="差異比對紅框"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:col-start-1 lg:pr-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-bold mb-4">
+                            初步掃描
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            不需動腦，紅框直接標出來。
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            對於解析度一致的檔案，<strong>並排模式 (Side-by-Side)</strong> 是您的第一道防線。它會掃描整個文件，並用<span
+                                class="text-red-600 font-bold">紅框</span>圈出所有不一樣的地方。
+                        </p>
+
+                        <div class="bg-gray-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+                            <p class="text-sm text-gray-600">
+                                <strong>💡 專業撇步：</strong> 廠商改了模切線或解析度導致滿江紅？別擔心，切換到 <strong>疊圖模式 (Overlay Mode)</strong>
+                                即可。我們的頻閃技術能幫您忽略模切線位移，專注於檢查內容。
+                            </p>
+                        </div>
+
+                        <div class="mt-6">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm font-medium">
+                                🎯 適合內容檢查
+                            </span>
+                            <span
+                                class="ml-2 inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm font-medium">
+                                ⚡ 快速預覽
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl transform rotate-2 opacity-10 blur-lg">
+                        </div>
+                        <img src="1_Ghost_Revision.gif" alt="抓出幽靈修改"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-red-100 text-red-600 text-sm font-bold mb-4">
+                            解決 OEM 噩夢
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            瞬間抓到客戶偷改了哪裡。
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            客戶常說「我只改了一個字」，結果傳回來的 "Final_v2" 卻偷偷刪掉了一個圖示，或動到了別的地方。
+                        </p>
+                        <p class="text-lg text-gray-600">
+                            <strong>ProofLens</strong> 將新檔案疊加在舊檔案上。按住 <kbd
+                                class="bg-gray-100 px-2 py-1 rounded border border-gray-300 font-mono text-sm">空白鍵</kbd>
+                            讓那個消失的圖示瘋狂閃爍，想忽略都難。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="lg:col-start-2 relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-l from-green-500 to-emerald-500 rounded-3xl transform -rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f4_shield.png" alt="安全離線"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:col-start-1 lg:pr-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-bold mb-4">
+                            企業級安全性
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            100% 離線。100% 安全。
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            正在處理 Apple、FDA 醫療器材或未公開的原型專案？把這些檔案上傳到雲端比對工具簡直是冒險。
+                        </p>
+                        <p class="text-lg text-gray-600">
+                            ProofLens 是個<strong>獨立的桌面應用程式</strong>。您的檔案只在您的記憶體 (RAM) 運作，永遠不會離開您的電腦。
+                        </p>
+                        <div class="mt-6 flex gap-4">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm">🚫
+                                絕無雲端上傳</span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm">🔒
+                                本地端運算</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl transform rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f5_pages.gif" alt="支援多頁PDF"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold mb-4">
+                            生產力大爆發
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            幾分鐘內檢查 100 頁。
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            有一本 50 頁的使用手冊，或是一系列的包裝 SKU 要檢查？千萬別一個一個開視窗。
+                        </p>
+                        <p class="text-lg text-gray-600 mb-6">
+                            <strong>ProofLens</strong> 支援 <strong>多頁 PDF</strong> 和 <strong>批次列表 (Batch List)</strong>
+                            管理。一次載入整份文件，自動排序，然後用「下一頁」快捷鍵像看漫畫一樣快速掃描。
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>多頁 PDF：</strong> 瞬間跳轉到第 25 頁。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>批次比對：</strong> 一次拖入 20 個檔案也沒問題。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16">簡單三步驟</h2>
+
+            <!-- Video Placeholder -->
+            <div
+                class="relative max-w-4xl mx-auto mb-16 rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-gray-800 aspect-video">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/RxcOkiLkJtc?si=8oJbhWijJs52kblc"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <!-- Fallback Link for Local/Restricted Contexts -->
+            <div class="text-center mb-16 -mt-12 relative z-10 pointer-events-none">
+                <a href="https://youtu.be/RxcOkiLkJtc" target="_blank"
+                    class="pointer-events-auto inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition bg-gray-900/80 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-700">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z" />
+                    </svg>
+                    前往 YouTube 觀看
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        1</div>
+                    <h3 class="text-xl font-bold mb-4">載入檔案</h3>
+                    <p class="text-gray-400">將您的「參考檔」(原始檔) 和「校對檔」(有修改的版本) 直接拖曳進程式。</p>
+                </div>
+
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        2</div>
+                    <h3 class="text-xl font-bold mb-4">開始比對</h3>
+                    <p class="text-gray-400">點擊「開始比對」，讓程式幫您並排呈現並標記出差異。</p>
+                </div>
+
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        3</div>
+                    <h3 class="text-xl font-bold mb-4">閃爍檢查與修正</h3>
+                    <p class="text-gray-400">切換到疊圖模式，按住空白鍵啟動「閃爍偵測」。看著錯誤點在螢幕上閃動，在送印前修正它們。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Story Section -->
+    <section class="py-20 bg-white border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-start gap-10">
+                <!-- Avatar/Profile Placeholder -->
+                <div class="shrink-0 mx-auto md:mx-0">
+                    <div
+                        class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center shadow-lg ring-4 ring-white border border-gray-100">
+                        <span class="text-3xl font-bold text-blue-600">EL</span>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <div
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            開發者
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center md:text-left">👋 嗨，我是 Evelyn。</h2>
+                    <div class="space-y-4 text-lg text-gray-600 leading-relaxed font-normal">
+                        <p>
+                            我是一名平面設計師，也專攻包裝設計。多年來，我每天都要手動開兩個 PDF 視窗，用肉眼在螢幕上比對，就怕廠商漏了字或版面跑掉。這種方法 99%
+                            的時間都管用——前提是我有足夠的耐心把視窗對得極其精準。
+                        </p>
+                        <p class="font-semibold text-gray-900 text-xl">
+                            問題不在於準確度，而在於「時間」。
+                        </p>
+                        <p>
+                            為了校對而耗費大量生命在「手動對齊視窗」上，實在太可惜了。特別是當期限逼近，而你還有幾十個檔案要檢查的時候。
+                        </p>
+                        <p>
+                            <span
+                                class="font-bold text-gray-900">ProofLens</span>是從我自己的日常痛點中誕生的。我設計它是為了處理那些惱人的技術活（自動對齊、縮放、批次處理），這樣我（和您）就可以把精力花在真正重要的事情上：確認設計是否完美。
+                        </p>
+                        <p
+                            class="italic font-medium text-gray-800 pt-2 border-l-4 border-blue-500 pl-4 bg-gray-50 py-2 rounded-r">
+                            這是我希望十年前我就擁有的工具。現在，我希望能幫你也省下這些時間。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">簡單，透明的價格</h2>
+                <p class="text-xl text-gray-600">一次付費，終身使用。不採月費訂閱制。</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Plan A -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 relative overflow-hidden hover:-translate-y-1 transition duration-300">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">標準個人授權</h3>
+                    <p class="text-gray-500 mb-6">適合個人設計師</p>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-extrabold text-gray-900">$15</span>
+                        <span class="text-gray-500 ml-2">/ 終身</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>一次性買斷</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>包含終身更新</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>安裝於 1 台電腦</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Email 支援</li>
+                    </ul>
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                        class="block w-full py-4 px-6 bg-gray-900 hover:bg-gray-800 text-white font-bold text-center rounded-xl transition">
+                        購買標準授權
+                    </a>
+                </div>
+
+                <!-- Plan B -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl border-2 border-blue-600 p-8 relative overflow-hidden hover:-translate-y-1 transition duration-300">
+                    <div
+                        class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        最超值</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">團隊協作授權</h3>
+                    <p class="text-gray-500 mb-6">適合代理商與品管部門</p>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-extrabold text-gray-900">$49</span>
+                        <span class="text-gray-500 ml-2">/ 終身</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>最多 5 位使用者</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>優先技術支援</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>可供商業用途 (Commercial Use)</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>包含終身更新</li>
+                    </ul>
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                        class="block w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-center rounded-xl shadow-lg shadow-blue-600/30 transition">
+                        購買團隊授權
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div
+                    class="inline-flex items-center justify-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm border border-gray-200 transition hover:shadow-md cursor-default">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700 font-medium">
+                        <span class="font-bold text-gray-900">30 天退款保證。</span> 如果ProofLens沒幫您省下時間，歡迎申請退款。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Talk / Disclaimer Section -->
+    <section class="py-20 bg-white border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center justify-center gap-3">
+                    <span class="text-3xl">⚠️</span> "Real Talk" 掏心掏肺的真心話
+                </h2>
+                <p class="mt-4 text-gray-700 max-w-2xl mx-auto">
+                    我希望這套工具能真正幫到您，但也想先把一些限制說明一下。這是我一人開發的工具，是為了解決真實工作問題而生：
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">它比對的是「像素」，不是「程式碼」</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            ProofLens 就像是數位的Light Table。它看的是最終輸出的視覺畫面。它不會做 OCR 文字辨識、不會拼字檢查。如果看起來不一樣，它就會標出來。
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">解析度很重要</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            為了比對 PDF 或 AI 檔，程式會將它們轉檔為高解析度圖片。雖然已優化 300dpi 以上的效能，但如果遇到極大或極複雜的向量檔，請給它一點時間載入。
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">僅限 Windows</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            目前版本僅支援 Windows 10 / 11 系統。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">仍需要您的判斷</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            自動偵測 (紅框) 偶爾會有誤判 (例如極細微的字體反鋸齒變化)，或漏掉極淡的顏色差異。請務必使用「頻閃模式 (空白鍵)」進行最後的人眼確認。
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">免責聲明</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            這是一個輔助您工作的工具，而不是用來取代您專業審核的保證。ProofLens 無法對任何印刷錯誤或重印費用負責。您才是最後的守門員。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-12">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain">
+                <span class="font-bold text-gray-900">ProofLens</span>
+            </div>
+            <div class="text-gray-500 text-sm text-center md:text-right">
+                <p>Created by <span class="text-gray-900 font-medium">Evelyn YT Liu</span></p>
+                <a href="mailto:evelyn.evagor@gmail.com"
+                    class="block mt-1 hover:text-blue-600 transition duration-300">evelyn.evagor@gmail.com</a>
+                <p class="mt-1">Copyright © 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
