@@ -56,6 +56,18 @@
                     <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain">
                     <span class="font-bold text-xl text-gray-900">ProofLens</span>
                 </div>
+
+                <!-- Language Toggle (Mobile) -->
+                <button onclick="localStorage.setItem('pref_lang', 'en'); window.location.href = 'index.html'"
+                    class="md:hidden text-gray-500 hover:text-gray-900 font-bold transition flex items-center gap-1 ml-auto mr-4">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129">
+                        </path>
+                    </svg>
+                    EN
+                </button>
+
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium transition">功能特色</a>
                     <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium transition">使用教學</a>
