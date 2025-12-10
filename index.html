@@ -32,7 +32,7 @@
     <script>
         var userLang = navigator.language || navigator.userLanguage;
         if (userLang.toLowerCase().includes('zh') && localStorage.getItem('pref_lang') !== 'en') {
-            window.location.href = 'gr_zh.html';
+            window.location.href = 'zh.html';
         }
     </script>
 </head>
@@ -54,7 +54,7 @@
                     <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium transition">Pricing</a>
 
                     <!-- Language Toggle -->
-                    <button onclick="localStorage.setItem('pref_lang', 'zh'); window.location.href = 'gr_zh.html'"
+                    <button onclick="localStorage.setItem('pref_lang', 'zh'); window.location.href = 'zh.html'"
                         class="text-gray-500 hover:text-gray-900 font-bold transition flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
