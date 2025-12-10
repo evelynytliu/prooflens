@@ -1,505 +1,655 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Proof Check V2.0 - 智慧比對工具</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap"
-        rel="stylesheet">
+    <title>ProofLens - Catch Errors Before Ink Hits Paper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-            --text-main: #1e293b;
-            --text-sub: #475569;
-            --accent: #f59e0b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Inter', 'Noto Sans TC', sans-serif;
-            color: var(--text-main);
-            line-height: 1.6;
-            background-color: var(--white);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
 
-        a {
-            text-decoration: none;
+        .strobe-animation {
+            animation: pulse-opacity 2s infinite;
         }
 
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
+        @keyframes pulse-opacity {
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            background-color: var(--text-main);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 160px 5% 100px;
-            text-align: center;
-            background: radial-gradient(circle at 50% 50%, #eff6ff 0%, #fff 100%);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--text-main) 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-sub);
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.5);
-        }
-
-        .hero-image {
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-
-        .hero-image img {
-            width: 100%;
-            display: block;
-        }
-
-        /* Features Section */
-        .section {
-            padding: 100px 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: var(--text-sub);
-            font-size: 1.1rem;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto 100px;
-        }
-
-        .feature-grid.reverse {
-            direction: rtl;
-            /* Simple way to swap columns visually */
-        }
-
-        .feature-grid.reverse>* {
-            direction: ltr;
-        }
-
-        .feature-content h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        .feature-content p {
-            font-size: 1.1rem;
-            color: var(--text-sub);
-            margin-bottom: 30px;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 24px;
-            height: 24px;
-            background-color: #dbeafe;
-            color: var(--primary);
-            border-radius: 50%;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .feature-image {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
-            border: 1px solid #f1f5f9;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-image:hover {
-            transform: scale(1.02);
-        }
-
-        .feature-image img {
-            width: 100%;
-            display: block;
-        }
-
-        /* Steps Section */
-        .steps-section {
-            background-color: var(--bg-light);
-        }
-
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .step-card {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-number {
-            font-size: 4rem;
-            font-weight: 900;
-            color: #f1f5f9;
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            line-height: 1;
-        }
-
-        .step-card h4 {
-            font-size: 1.25rem;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .step-card p {
-            color: var(--text-sub);
-            position: relative;
-            z-index: 1;
-            font-size: 0.95rem;
-        }
-
-        /* Shortcuts & Settings */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .info-card {
-            background: var(--text-main);
-            color: white;
-            padding: 40px;
-            border-radius: 20px;
-        }
-
-        .info-card.light {
-            background: white;
-            color: var(--text-main);
-            border: 1px solid var(--bg-light);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
-        }
-
-        .info-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .shortcut-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .shortcut-row:last-child {
-            border-bottom: none;
-        }
-
-        kbd {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--white);
-            padding: 60px 5% 30px;
-            text-align: center;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .footer-logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-
-        .copyright {
-            color: var(--text-sub);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            0%,
+            100% {
+                opacity: 1;
             }
 
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-grid.reverse {
-                direction: ltr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
+            50% {
+                opacity: 0.8;
             }
         }
     </style>
 </head>
 
-<body>
+<body class="bg-white text-gray-900 antialiased">
 
-    <nav>
-        <div class="logo">📘 Smart Proof Check</div>
-        <a href="https://drive.google.com/drive/folders/14Exv1K3k1apiZ_o_uW3y2oorbuztTTTj?usp=sharing" target="_blank"
-            class="nav-btn">立即下載</a>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain">
+                    <span class="font-bold text-xl text-gray-900">ProofLens</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium transition">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium transition">How it
+                        Works</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium transition">Pricing</a>
+                    <a href="#pricing"
+                        class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">Get
+                        Started</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <header class="hero">
-        <h1>設計稿校對<br>從未如此精準</h1>
-        <p>專為設計師與印前人員打造。自動對齊、智慧偵測，讓每一個像素都完美無瑕。</p>
-        <div class="cta-group">
-            <a href="https://drive.google.com/drive/folders/14Exv1K3k1apiZ_o_uW3y2oorbuztTTTj?usp=sharing"
-                target="_blank" class="btn-primary">⬇️ 免費下載 V2.0</a>
-        </div>
-        <div class="hero-image">
-            <img src="main_ui_result.png" alt="Smart Proof Check Interface">
-        </div>
-    </header>
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-gray-900 overflow-hidden">
+        <!-- Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
 
-    <section class="section">
-        <div class="section-title">
-            <h2>強大功能，極簡操作</h2>
-            <p>我們將複雜的影像處理技術，濃縮在直覺的介面中。</p>
-        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                Catch Errors Before <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Ink Hits
+                    Paper.</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 mb-10">
+                The automated proofreading tool for packaging and manuals. Detect "silent updates" and vendor file
+                shifts in seconds.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+                <a href="#pricing"
+                    class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-full text-white bg-blue-600 hover:bg-blue-500 transition-all transform hover:scale-105 shadow-xl shadow-blue-600/30">
+                    Get ProofLens for Windows ($15)
+                </a>
+                <a href="#how-it-works"
+                    class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-full text-gray-300 bg-white/10 hover:bg-white/20 backdrop-blur-sm transition border border-white/10">
+                    See how it works
+                </a>
+            </div>
 
-        <!-- Feature 1 -->
-        <div class="feature-grid">
-            <div class="feature-content">
-                <h3>雙模式檢視，細節不遺漏</h3>
-                <p>無論是檢查整體版面的「並排模式」，還是抓出微小位移的「疊圖模式」，都能一鍵切換。</p>
-                <ul class="feature-list">
-                    <li>疊圖閃爍檢查 (按住空白鍵)</li>
-                    <li>同步縮放與移動</li>
-                    <li>自動標示差異區域</li>
-                </ul>
-            </div>
-            <div class="feature-image">
-                <img src="side_by_side_result.png" alt="Side by Side Comparison">
-            </div>
-        </div>
+            <!-- Hero Image/GIF Placeholder -->
+            <div class="relative max-w-5xl mx-auto mt-16 group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200">
+                </div>
 
-        <!-- Feature 2 -->
-        <div class="feature-grid reverse">
-            <div class="feature-content">
-                <h3>專業級 PDF 渲染與設定</h3>
-                <p>針對印刷需求優化，支援 CMYK 色彩模擬與高解析度渲染，確保螢幕所見即印刷所得。</p>
-                <ul class="feature-list">
-                    <li>自訂 DPI 解析度</li>
-                    <li>增強型 PDF 透明度處理</li>
-                    <li>可調整的靈敏度參數</li>
-                </ul>
-            </div>
-            <div class="feature-image">
-                <img src="image_fe859e.png" alt="Advanced Settings">
+                <div class="relative rounded-2xl shadow-2xl overflow-hidden border border-gray-700 bg-gray-900">
+                    <img src="hero_box.gif" alt="ProofLens Auto-Strobe Demo"
+                        class="w-full h-auto object-cover transform transition duration-700 hover:scale-[1.01]">
+
+                    <div class="absolute bottom-4 left-4 right-4 text-center">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-black/50 backdrop-blur-md text-white/90 text-sm font-medium border border-white/10">
+                            Auto-Strobe Mode (0.5s)
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="section steps-section">
-        <div class="section-title">
-            <h2>4 步驟快速上手</h2>
-        </div>
-        <div class="steps-container">
-            <div class="step-card">
-                <div class="step-number">01</div>
-                <h4>載入檔案</h4>
-                <p>直接拖放 PDF 或圖片至左右視窗。支援多頁 PDF 指定頁數。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">02</div>
-                <h4>設定參數</h4>
-                <p>視需要調整 DPI 解析度，一般文件建議使用預設值即可。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">03</div>
-                <h4>開始比對</h4>
-                <p>點擊藍色按鈕，系統將自動進行影像對齊與差異分析。</p>
-            </div>
-            <div class="step-card">
-                <div class="step-number">04</div>
-                <h4>確認結果</h4>
-                <p>使用疊圖或並排模式檢視紅框標示處，按空白鍵可快速閃爍檢查。</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="info-grid">
-            <!-- Shortcuts -->
-            <div class="info-card">
-                <h3>⌨️ 效率快捷鍵</h3>
-                <div class="shortcut-row">
-                    <span>全域貼上 (圖片/路徑)</span>
-                    <kbd>Ctrl + V</kbd>
-                </div>
-                <div class="shortcut-row">
-                    <span>疊圖閃爍切換</span>
-                    <kbd>Space</kbd>
-                </div>
-                <div class="shortcut-row">
-                    <span>縮放檢視</span>
-                    <kbd>滾輪</kbd>
-                </div>
-                <div class="shortcut-row">
-                    <span>移動視角</span>
-                    <kbd>左鍵拖曳</kbd>
-                </div>
+    <!-- Pain Points Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why relying on your eyes is dangerous</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Manual proofreading is slow, exhausting, and prone to
+                    "change blindness".</p>
             </div>
 
-            <!-- Specs -->
-            <div class="info-card light">
-                <h3>⚙️ 系統需求</h3>
-                <ul class="feature-list" style="margin-top: 20px;">
-                    <li>Windows 10 / 11 (64-bit)</li>
-                    <li>建議 8GB 以上記憶體</li>
-                    <li>無需安裝，解壓縮即用 (Portable)</li>
-                    <li>支援 PDF, JPG, PNG 格式</li>
-                </ul>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-2xl mb-6">👻</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">The OEM Ghost Revision</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Client sent a "Final_v2" but didn't mention they changed a regulatory icon? If you miss it, you
+                        pay for the reprint.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl mb-6">🖨️
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">The Vendor Conversion Fail</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        You sent a perfect PDF, but the print vendor's software shifted the layout by 1mm. It looks fine
+                        at a glance, but ProofLens spots the wiggle.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition duration-300">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl mb-6">😵
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">The Version Confusion</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Is "Pack_v3_Final.pdf" actually the same as "Pack_v3_Print.pdf"? Don't guess. Verify it in 5
+                        seconds.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer-logo">📘 Smart Proof Check</div>
-        <p class="copyright">&copy; 2025 Smart Proof Check V2.0. All rights reserved.</p>
-        <div class="creator-credit" style="margin-top: 20px; font-size: 0.85rem; color: #94a3b8;">
-            Created by <a href="mailto:evelyn.evagor@gmail.com"
-                style="color: var(--primary); font-weight: 600; transition: color 0.2s;">Evelyn Liu</a>
+    <!-- Feature Deep Dive Section (Zig-Zag Layout) -->
+    <section id="features" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl transform rotate-2 opacity-10 blur-lg">
+                        </div>
+                        <img src="f3_app_ov.gif" alt="Text Reflow Detection"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm font-bold mb-4">
+                            Print Vendor QA
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            Spot Text Reflow & Shifts.
+                        </h3>
+
+                        <p class="text-lg text-gray-600 mb-6">
+                            Vendor's software shifted your layout by 1mm? Something disappeared during conversion?
+                            Side-by-side comparison often misses these subtle disasters.
+                        </p>
+
+                        <p class="text-lg text-gray-600 mb-6">
+                            Plus, if the vendor file includes <strong>crop marks or color bars</strong>, ProofLens
+                            automatically ignores them. Our <strong>Smart Auto-Align</strong> engine snaps the content
+                            together instantly, so you can check the actual design without manual cropping.
+                        </p>
+
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>Auto-Align:</strong> Ignores bleed & crop marks to align content
+                                    perfectly.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>Auto-Strobe:</strong> Watch shifted text "vibrate" on screen.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="lg:col-start-2 relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-l from-yellow-500 to-amber-500 rounded-3xl transform -rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f2_app_sbs.gif" alt="Side-by-Side Red Box Detection"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:col-start-1 lg:pr-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-bold mb-4">
+                            Initial Scan Helper
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            Map Differences with Red Boxes.
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            For files with matching resolutions, the <strong>Side-by-Side</strong> mode acts as your
+                            first line of defense. It scans the document and marks discrepancies with <span
+                                class="text-red-600 font-bold">Red Boxes</span>.
+                        </p>
+
+                        <div class="bg-gray-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+                            <p class="text-sm text-gray-600">
+                                <strong>💡 Pro Tip:</strong> Vendor changed the dielines or resolution? If Red Boxes
+                                cover the screen, simply switch to <strong>Overlay Mode</strong>. Our Strobe
+                                technology helps to ignore dieline shifts and focuses on the content.
+                            </p>
+                        </div>
+
+                        <div class="mt-6">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm font-medium">
+                                🎯 Ideal for Content Check
+                            </span>
+                            <span
+                                class="ml-2 inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm font-medium">
+                                ⚡ Quick Pre-scan
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl transform rotate-2 opacity-10 blur-lg">
+                        </div>
+                        <img src="1_Ghost_Revision.gif" alt="Ghost Revision Detection"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-red-100 text-red-600 text-sm font-bold mb-4">
+                            OEM Nightmare Solved
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            Catch "Ghost Revisions" instantly.
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Clients often send "Final_v2" without mentioning they secretly deleted a regulatory icon or
+                            changed the text.
+                        </p>
+                        <p class="text-lg text-gray-600">
+                            <strong>ProofLens</strong> overlays the new file on the old one. Hold <kbd
+                                class="bg-gray-100 px-2 py-1 rounded border border-gray-300 font-mono text-sm">Space</kbd>
+                            to make that missing icon flash violently.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="lg:col-start-2 relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-l from-green-500 to-emerald-500 rounded-3xl transform -rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f4_shield.png" alt="Secure and Offline"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:col-start-1 lg:pr-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-sm font-bold mb-4">
+                            Enterprise Grade Security
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            100% Offline. 100% Secure.
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Working on NDA projects for Apple, FDA medical devices, or unreleased prototypes? You can't
+                            risk uploading files to a cloud comparison tool.
+                        </p>
+                        <p class="text-lg text-gray-600">
+                            ProofLens is a <strong>standalone desktop app</strong>. Your files are processed in your RAM
+                            and never leave your machine.
+                        </p>
+                        <div class="mt-6 flex gap-4">
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm">🚫
+                                No Cloud Uploads</span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded bg-gray-100 text-gray-700 text-sm">🔒
+                                Local Processing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-16 lg:items-center">
+                    <div class="relative mb-8 lg:mb-0">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl transform rotate-1 opacity-10 blur-lg">
+                        </div>
+                        <img src="f5_pages.gif" alt="Multi-page PDF Support"
+                            class="relative rounded-2xl shadow-2xl border border-gray-100 w-full transform transition hover:scale-[1.01] duration-500">
+                    </div>
+                    <div class="lg:pl-10">
+                        <div
+                            class="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-600 text-sm font-bold mb-4">
+                            Massive Productivity Boost
+                        </div>
+                        <h3 class="text-3xl font-bold text-gray-900 tracking-tight sm:text-4xl mb-4">
+                            Check 100+ Pages in Minutes.
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Have a 50-page user manual or a series of packaging SKUs? Don't open them one by one.
+                        </p>
+                        <p class="text-lg text-gray-600 mb-6">
+                            <strong>ProofLens</strong> supports <strong>Multi-page PDFs</strong> and <strong>Batch
+                                List</strong> management. Load the entire document, auto-sort the pages, and glide
+                            through them with the "Next Page" shortcut.
+                        </p>
+                        <ul class="space-y-3 text-gray-600">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>Multi-page PDF:</strong> Jump to page 25 instantly.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span><strong>Batch Lists:</strong> Drag in 20 files at once.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section id="how-it-works" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-16">Simple 3-Step Workflow</h2>
+
+            <!-- Video Placeholder -->
+            <div
+                class="relative max-w-4xl mx-auto mb-16 rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-gray-800 aspect-video">
+                <iframe class="w-full h-full" src="https://www.youtube.com/embed/RxcOkiLkJtc?si=8oJbhWijJs52kblc"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <!-- Fallback Link for Local/Restricted Contexts -->
+            <div class="text-center mb-16 -mt-12 relative z-10 pointer-events-none">
+                <a href="https://youtu.be/RxcOkiLkJtc" target="_blank"
+                    class="pointer-events-auto inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition bg-gray-900/80 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-700">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z" />
+                    </svg>
+                    Watch on YouTube
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        1</div>
+                    <h3 class="text-xl font-bold mb-4">Load Files</h3>
+                    <p class="text-gray-400">Drag & Drop your Reference (Original) and Proof (New Version) files
+                        directly into the app.</p>
+                </div>
+
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        2</div>
+                    <h3 class="text-xl font-bold mb-4">Start Comparing</h3>
+                    <p class="text-gray-400">Click "Start Comparing" and let ProofLens show you side-by-side
+                        versions and mark the differences.</p>
+                </div>
+
+                <div class="relative">
+                    <div
+                        class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-600/50">
+                        3</div>
+                    <h3 class="text-xl font-bold mb-4">Flash & Fix</h3>
+                    <p class="text-gray-400">Overlay mode: Hold Spacebar to Flash-Diff. Watch errors blink and
+                        fix them before they go to print.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Story Section -->
+    <section class="py-20 bg-white border-b border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-start gap-10">
+                <!-- Avatar/Profile Placeholder -->
+                <div class="shrink-0 mx-auto md:mx-0">
+                    <div
+                        class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center shadow-lg ring-4 ring-white border border-gray-100">
+                        <span class="text-3xl font-bold text-blue-600">EL</span>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <div
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            Creator
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="flex-1">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center md:text-left">👋 Hi, I'm Evelyn.</h2>
+                    <div class="space-y-4 text-lg text-gray-600 leading-relaxed font-normal">
+                        <p>
+                            I am a Graphic Designer and Packaging Specialist. For years, I manually aligned PDF windows
+                            to catch dropped text or layout shifts in vendor proofs. It worked 99% of the time—as long
+                            as I had the patience to line everything up perfectly.
+                        </p>
+                        <p class="font-semibold text-gray-900 text-xl">
+                            So the problem wasn't accuracy—it was time.
+                        </p>
+                        <p>
+                            Spending minutes just to manually align a file is a waste of life. Especially when you have
+                            a batch of 20 files to check before a deadline.
+                        </p>
+                        <p>
+                            <span class="font-bold text-gray-900">ProofLens</span> was born from my own daily workflow.
+                            I designed it to handle the tedious technical parts (auto-alignment, scaling, batching) so I
+                            could get straight to the important part: verifying the design.
+                        </p>
+                        <p
+                            class="italic font-medium text-gray-800 pt-2 border-l-4 border-blue-500 pl-4 bg-gray-50 py-2 rounded-r">
+                            It’s the tool I wish I had 10 years ago. Now, I’m hoping it can also help you save time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600">Pay once, use forever. No monthly subscriptions.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Plan A -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 relative overflow-hidden hover:-translate-y-1 transition duration-300">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Standard License</h3>
+                    <p class="text-gray-500 mb-6">For Solo Designers</p>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-extrabold text-gray-900">$15</span>
+                        <span class="text-gray-500 ml-2">/ lifetime</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>One-time payment</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Lifetime updates included</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Install on 1 PC</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Email Support</li>
+                    </ul>
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                        class="block w-full py-4 px-6 bg-gray-900 hover:bg-gray-800 text-white font-bold text-center rounded-xl transition">Buy
+                        Standard License</a>
+                </div>
+
+                <!-- Plan B -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl border-2 border-blue-600 p-8 relative overflow-hidden hover:-translate-y-1 transition duration-300">
+                    <div
+                        class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        Best Value</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Team License</h3>
+                    <p class="text-gray-500 mb-6">For Agencies & QA Depts</p>
+                    <div class="flex items-baseline mb-8">
+                        <span class="text-5xl font-extrabold text-gray-900">$49</span>
+                        <span class="text-gray-500 ml-2">/ lifetime</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 text-gray-600">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Up to 5 Users</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Priority Support</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Commercial Use Ready</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>Lifetime updates included</li>
+                    </ul>
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                        class="block w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-center rounded-xl shadow-lg shadow-blue-600/30 transition">Buy
+                        Team License</a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <div
+                    class="inline-flex items-center justify-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm border border-gray-200 transition hover:shadow-md cursor-default">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-gray-700 font-medium">
+                        <span class="font-bold text-gray-900">30-Day Money-Back Guarantee.</span> If it doesn't save you
+                        time, get a refund.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Talk / Disclaimer Section -->
+    <section class="py-20 bg-white border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center justify-center gap-3">
+                    <span class="text-3xl">⚠️</span> "Real Talk" (Important Notes)
+                </h2>
+                <p class="mt-4 text-gray-700 max-w-2xl mx-auto">
+                    I want you to be happy with this tool, so let’s manage expectations. I am a solo developer building
+                    this
+                    for real-world use:
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">It compares Pixels, not Code</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            ProofLens looks at the visual output (like a digital light table). It does not do OCR,
+                            spell-checking, or extract text. If it looks different, it marks it.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">Resolution Matters</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            To compare PDFs or AI files, the app converts them into high-resolution images. While
+                            optimized
+                            for 300+ DPI, extremely large or complex vector files might take a moment to load.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">Windows Only</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            This version is strictly for Windows 10 / 11.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">Human Judgment Required</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            Automated detection (Red Boxes) can sometimes have false positives (due to anti-aliasing) or
+                            miss
+                            extremely faint changes. Always use the "Strobe Mode" (Spacebar) for your final human check.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 mb-2">Liability</h4>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            This tool is an assistant to aid your workflow, not a replacement for your professional
+                            approval.
+                            ProofLens cannot be held responsible for printing costs or errors that are missed. You are
+                            the
+                            final gatekeeper.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-12">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <img src="icon.png" alt="Logo" class="h-8 w-8 object-contain">
+                <span class="font-bold text-gray-900">ProofLens</span>
+            </div>
+            <div class="text-gray-500 text-sm text-center md:text-right">
+                <p>Created by <span class="text-gray-900 font-medium">Evelyn YT Liu</span></p>
+                <a href="mailto:evelyn.evagor@gmail.com"
+                    class="block mt-1 hover:text-blue-600 transition duration-300">evelyn.evagor@gmail.com</a>
+                <p class="mt-1">Copyright © 2025. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
