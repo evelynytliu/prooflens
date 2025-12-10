@@ -7,6 +7,16 @@
     <title>ProofLens - Catch Errors Before Ink Hits Paper</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Social Media / Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ProofLens - Catch Errors Before Ink Hits Paper">
+    <meta property="og:description"
+        content="The automated proofreading tool for packaging and manuals. Detect 'silent updates' and vendor file shifts in seconds.">
+    <meta property="og:image" content="ProofLens%20cover%20thumbnail.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="ProofLens%20cover%20thumbnail.jpg">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -32,7 +42,7 @@
     <script>
         var userLang = navigator.language || navigator.userLanguage;
         if (userLang.toLowerCase().includes('zh') && localStorage.getItem('pref_lang') !== 'en') {
-            window.location.href = 'zh.html';
+            window.location.href = 'gr_zh.html';
         }
     </script>
 </head>
@@ -54,7 +64,7 @@
                     <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium transition">Pricing</a>
 
                     <!-- Language Toggle -->
-                    <button onclick="localStorage.setItem('pref_lang', 'zh'); window.location.href = 'zh.html'"
+                    <button onclick="localStorage.setItem('pref_lang', 'zh'); window.location.href = 'gr_zh.html'"
                         class="text-gray-500 hover:text-gray-900 font-bold transition flex items-center gap-1">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -531,7 +541,7 @@
                                     d="M5 13l4 4L19 7"></path>
                             </svg>Email Support</li>
                     </ul>
-                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens/launch20"
                         class="block w-full py-4 px-6 bg-gray-900 hover:bg-gray-800 text-white font-bold text-center rounded-xl transition">Buy
                         Standard License</a>
                 </div>
@@ -570,7 +580,7 @@
                                     d="M5 13l4 4L19 7"></path>
                             </svg>Lifetime updates included</li>
                     </ul>
-                    <a href="https://evelynytliu.gumroad.com/l/prooflens"
+                    <a href="https://evelynytliu.gumroad.com/l/prooflens/launch20"
                         class="block w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold text-center rounded-xl shadow-lg shadow-blue-600/30 transition">Buy
                         Team License</a>
                 </div>
