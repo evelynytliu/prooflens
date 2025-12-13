@@ -37,6 +37,48 @@
             }
         }
     </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "如何比對兩個 PDF 檔案以找出印刷錯誤？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "您可以使用 ProofLens。它就像數位的 Light Table，能自動對齊您的原始設計稿與印刷廠的校稿。與一般文字比對工具不同，ProofLens 檢查的是視覺像素，讓您能透過「頻閃」(閃爍) 模式立即發現遺失的元素、位移的版面或損壞的字體。"
+    }
+  }, {
+    "@type": "Question",
+    "name": "對於自由設計師來說，有比 Esko 或 Global Vision 更便宜的替代方案嗎？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "有的。雖然 Esko 和 Global Vision 是大型企業的業界標準，但 ProofLens 是專為自由設計師和小型代理商設計的。它提供基本的視覺比對功能（自動對齊、差異標記、頻閃檢視），只需一次性購買 $15 美元，是視覺品質控制的經濟實惠替代方案。"
+    }
+  }, {
+    "@type": "Question",
+    "name": "為什麼要使用 ProofLens 而不是 Adobe Acrobat 的「比較檔案」功能？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Adobe Acrobat 比較的是檔案結構，這常常會遺漏像是外框文字、遺失的連結圖片或點陣化錯誤等問題。ProofLens 比較的是實際的視覺輸出（像素）。如果肉眼看起來不一樣，ProofLens 就會抓到，即使背後的程式碼看似正常。"
+    }
+  }, {
+    "@type": "Question",
+    "name": "ProofLens 能處理有不同裁切標記或尺寸的檔案嗎？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "可以。ProofLens 具有智慧型「自動對齊」引擎，能忽略裁切標記、出血區域和色條。它會自動偵測核心設計內容，並完美疊加兩個檔案，所以您不需要手動調整或裁切截圖。"
+    }
+  }, {
+    "@type": "Question",
+    "name": "我的客戶資料安全嗎？ProofLens 會上傳檔案到雲端嗎？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "您的資料 100% 安全。ProofLens 是完全離線的 Windows 桌面應用程式。所有處理都在您電腦的記憶體中進行。檔案永遠不會上傳到雲端，也不會用您的設計進行 AI 訓練，因此非常適合受 NDA 保護的專案。"
+    }
+  }]
+}
+</script>
     <!-- Redirect Script for consistency -->
     <script>
         // Check if user explicitly wants English
@@ -656,6 +698,100 @@
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50 border-t border-b border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">常見問題</h2>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <h3 class="font-bold text-gray-900 text-lg">如何比對兩個 PDF 檔案以找出印刷錯誤？</h3>
+                        <span class="transition group-open:rotate-180">
+                            <svg fill="none" class="h-6 w-6" shape-rendering="geometricPrecision" stroke="currentColor"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed">
+                        您可以使用 ProofLens。它就像數位的 Light Table，能自動對齊您的原始設計稿與印刷廠的校稿。與一般文字比對工具不同，ProofLens
+                        檢查的是視覺像素，讓您能透過「頻閃」(閃爍) 模式立即發現遺失的元素、位移的版面或損壞的字體。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <h3 class="font-bold text-gray-900 text-lg">對於自由設計師來說，有比 Esko 或 Global Vision 更便宜的替代方案嗎？</h3>
+                        <span class="transition group-open:rotate-180">
+                            <svg fill="none" class="h-6 w-6" shape-rendering="geometricPrecision" stroke="currentColor"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed">
+                        有的。雖然 Esko 和 Global Vision 是大型企業的業界標準，但 ProofLens
+                        是專為自由設計師和小型代理商設計的。它提供基本的視覺比對功能（自動對齊、差異標記、頻閃檢視），只需一次性購買 $15 美元，是視覺品質控制的經濟實惠替代方案。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <h3 class="font-bold text-gray-900 text-lg">為什麼要使用 ProofLens 而不是 Adobe Acrobat 的「比較檔案」功能？</h3>
+                        <span class="transition group-open:rotate-180">
+                            <svg fill="none" class="h-6 w-6" shape-rendering="geometricPrecision" stroke="currentColor"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed">
+                        Adobe Acrobat 比較的是檔案結構，這常常會遺漏像是外框文字、遺失的連結圖片或點陣化錯誤等問題。ProofLens
+                        比較的是實際的視覺輸出（像素）。如果肉眼看起來不一樣，ProofLens 就會抓到，即使背後的程式碼看似正常。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 4 -->
+                <details class="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <h3 class="font-bold text-gray-900 text-lg">ProofLens 能處理有不同裁切標記或尺寸的檔案嗎？</h3>
+                        <span class="transition group-open:rotate-180">
+                            <svg fill="none" class="h-6 w-6" shape-rendering="geometricPrecision" stroke="currentColor"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed">
+                        可以。ProofLens 具有智慧型「自動對齊」引擎，能忽略裁切標記、出血區域和色條。它會自動偵測核心設計內容，並完美疊加兩個檔案，所以您不需要手動調整或裁切截圖。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 5 -->
+                <details class="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                        <h3 class="font-bold text-gray-900 text-lg">我的客戶資料安全嗎？ProofLens 會上傳檔案到雲端嗎？</h3>
+                        <span class="transition group-open:rotate-180">
+                            <svg fill="none" class="h-6 w-6" shape-rendering="geometricPrecision" stroke="currentColor"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path d="M6 9l6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed">
+                        您的資料 100% 安全。ProofLens 是完全離線的 Windows 桌面應用程式。所有處理都在您電腦的記憶體中進行。檔案永遠不會上傳到雲端，也不會用您的設計進行 AI
+                        訓練，因此非常適合受 NDA 保護的專案。
+                    </div>
+                </details>
             </div>
         </div>
     </section>
